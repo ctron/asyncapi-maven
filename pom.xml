@@ -292,6 +292,7 @@
                         <executions>
                             <execution>
                                 <goals>
+                                    <goal>install</goal><!-- for using the plugin locally -->
                                     <goal>integration-test</goal>
                                     <goal>verify</goal>
                                 </goals>
