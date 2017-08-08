@@ -129,7 +129,7 @@ public class GenerateMojo extends AbstractMojo {
         // generate
 
         getLog().info(String.format("Generating API: %s:%s", title, version));
-        getLog().info(String.format("    Output: %s", this.targetPath));
+        getLog().debug(String.format("    Output: %s", this.targetPath));
 
         final Generator generator = new Generator(api);
         generator.characterSet(Charset.forName(this.characterSet));
