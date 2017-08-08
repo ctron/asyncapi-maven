@@ -33,7 +33,7 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 import de.dentrassi.asyncapi.AsyncApi;
 import de.dentrassi.asyncapi.generator.java.Generator;
-import de.dentrassi.asyncapi.parser.YamlParser;
+import de.dentrassi.asyncapi.internal.parser.YamlParser;
 
 /**
  * Generate sources from AsyncAPI definition

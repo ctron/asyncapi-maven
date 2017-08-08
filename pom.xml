@@ -64,7 +64,7 @@
 
         <maven.version>3.3.9</maven.version>
 
-        <asyncapi.version>0.0.1-SNAPSHOT</asyncapi.version>
+        <asyncapi.version>0.0.1</asyncapi.version>
     </properties>
 
     <prerequisites>
@@ -75,7 +75,7 @@
 
         <dependency>
             <groupId>de.dentrassi.asyncapi</groupId>
-            <artifactId>asyncapi</artifactId>
+            <artifactId>asyncapi-model</artifactId>
             <version>${asyncapi.version}</version>
         </dependency>
         <dependency>
