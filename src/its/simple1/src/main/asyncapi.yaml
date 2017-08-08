@@ -1,0 +1,76 @@
+asyncapi: "1.0.0"
+info:
+  title: "ITS #1"
+  version: "1.0.0"
+baseTopic: de.dentrassi.maven.asyncapi.test
+host: localhost
+schemes:
+  - amqp
+  - mqtt
+
+topics:
+  test.1.0.event.foo.bar:
+    subscribe:
+      $ref: "#/components/messages/fooBarSub"
+    publish:
+      $ref: "#/components/messages/fooBarPub"
+
+components:
+  messages:
+    fooBarPub:
+      summary: "Summary of publish"
+      description: "Description of publish"
+      payload:
+        type: object
+        properties:
+          bean1:
+            $ref: '#/components/schemas/bean1'
+          stringContent:
+            $ref: '#/components/schemas/stringContent'
+
+    fooBarSub:
+      summary: "Summary of subscribe"
+      # skipping description
+      payload:
+        type: object
+        properties:
+          bean2:
+            $ref: '#/components/schemas/bean2'
+          stringContent:
+            $ref: '#/components/schemas/stringContent'
+  schemas:
+    stringContent:
+      title: String content
+      description: "This is some string content"
+      type: string
+    bean1:
+      type: object
+      required:
+        - 'field1'
+        - 'field3'
+      properties:
+        field1:
+          description: "Field #1"
+          $ref: '#/components/schemas/stringContent'
+        field2:
+          description: "Field #2"
+          type: string
+        field3:
+          type: string
+          format: date-time
+    bean2:
+      type: object
+      required:
+        - 'field1'
+      properties:
+        field1:
+          description: Enum content
+          type: string
+          enum:
+            - foo
+            - bar
+            - baz
+        field2:
+          $ref: '#/components/schemas/stringContent'
+        field3:
+          $ref: '#/components/schemas/bean1'
