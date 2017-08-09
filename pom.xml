@@ -65,7 +65,7 @@
 
         <maven.version>3.3.9</maven.version>
 
-        <asyncapi.version>0.0.2-SNAPSHOT</asyncapi.version>
+        <asyncapi.version>0.0.2</asyncapi.version>
     </properties>
 
     <prerequisites>
