@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -33,6 +35,7 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 import de.dentrassi.asyncapi.AsyncApi;
 import de.dentrassi.asyncapi.generator.java.Generator;
+import de.dentrassi.asyncapi.generator.java.jms.JmsClientGenerator;
 import de.dentrassi.asyncapi.internal.parser.YamlParser;
 
 /**
@@ -61,6 +64,9 @@ public class GenerateMojo extends AbstractMojo {
 
     @Parameter(property = "project", readonly = true, required = true)
     protected MavenProject project;
+
+    @Parameter(defaultValue = "jms-client")
+    private Set<String> extensions = new HashSet<>();
 
     @Component
     private BuildContext buildContext;
@@ -91,6 +97,10 @@ public class GenerateMojo extends AbstractMojo {
 
     public void setBuildContext(final BuildContext buildContext) {
         this.buildContext = buildContext;
+    }
+
+    public void setExtensions(final Set<String> extensions) {
+        this.extensions = extensions;
     }
 
     @Override
@@ -131,12 +141,15 @@ public class GenerateMojo extends AbstractMojo {
         getLog().info(String.format("Generating API: %s:%s", title, version));
         getLog().debug(String.format("    Output: %s", this.targetPath));
 
-        final Generator generator = new Generator(api);
+        final Generator.Builder generator = Generator.newBuilder();
         generator.characterSet(Charset.forName(this.characterSet));
         generator.basePackage(this.packageBase);
-        generator.target(this.targetPath.toPath());
+        generator.targetPath(this.targetPath.toPath());
+
+        addNamedExtensions(generator);
+
         try {
-            generator.generate();
+            generator.build(api).generate();
         } catch (final Exception e) {
             throw new MojoFailureException("Failed to generate API", e);
         }
@@ -145,6 +158,18 @@ public class GenerateMojo extends AbstractMojo {
 
         this.project.addCompileSourceRoot(this.targetPath.getAbsolutePath());
         this.buildContext.refresh(this.targetPath.getAbsoluteFile());
+    }
+
+    private void addNamedExtensions(final Generator.Builder generator) throws MojoExecutionException {
+        for (final String extension : this.extensions) {
+            switch (extension.toLowerCase()) {
+            case "jms-client":
+                generator.addExtension(new JmsClientGenerator());
+                break;
+            default:
+                throw new MojoExecutionException(String.format("Unknown generator extension '%s'", extension));
+            }
+        }
     }
 
 }
