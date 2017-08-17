@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +36,8 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 import de.dentrassi.asyncapi.AsyncApi;
 import de.dentrassi.asyncapi.generator.java.Generator;
-import de.dentrassi.asyncapi.generator.java.jms.JmsClientGenerator;
+import de.dentrassi.asyncapi.generator.java.gson.GsonGeneratorExtension;
+import de.dentrassi.asyncapi.generator.java.jms.JmsClientGeneratorExtension;
 import de.dentrassi.asyncapi.internal.parser.YamlParser;
 
 /**
@@ -65,8 +67,8 @@ public class GenerateMojo extends AbstractMojo {
     @Parameter(property = "project", readonly = true, required = true)
     protected MavenProject project;
 
-    @Parameter(defaultValue = "jms-client")
-    private Set<String> extensions = new HashSet<>();
+    @Parameter
+    private Set<String> extensions;
 
     @Component
     private BuildContext buildContext;
@@ -161,10 +163,19 @@ public class GenerateMojo extends AbstractMojo {
     }
 
     private void addNamedExtensions(final Generator.Builder generator) throws MojoExecutionException {
+
+        if (this.extensions == null) {
+            this.extensions = new HashSet<>(Arrays.asList("jms-client", "gson"));
+            getLog().info("Using default extensions: " + this.extensions);
+        }
+
         for (final String extension : this.extensions) {
             switch (extension.toLowerCase()) {
             case "jms-client":
-                generator.addExtension(new JmsClientGenerator());
+                generator.addExtension(new JmsClientGeneratorExtension());
+                break;
+            case "gson":
+                generator.addExtension(new GsonGeneratorExtension());
                 break;
             default:
                 throw new MojoExecutionException(String.format("Unknown generator extension '%s'", extension));
