@@ -35,6 +35,8 @@ import org.apache.maven.project.MavenProject;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
 import de.dentrassi.asyncapi.AsyncApi;
+import de.dentrassi.asyncapi.ValidationException;
+import de.dentrassi.asyncapi.Validator.Marker;
 import de.dentrassi.asyncapi.generator.java.Generator;
 import de.dentrassi.asyncapi.generator.java.gson.GsonGeneratorExtension;
 import de.dentrassi.asyncapi.generator.java.jms.JmsClientGeneratorExtension;
@@ -121,10 +123,23 @@ public class GenerateMojo extends AbstractMojo {
         getLog().info(String.format("Reading definition: %s", this.definitionFile));
 
         final AsyncApi api;
+
         try (final InputStream in = Files.newInputStream(this.definitionFile.toPath())) {
+
             api = new YamlParser(in).parse();
+
+        } catch (final ValidationException e) {
+
+            getLog().error("Model validation failed: ");
+            for (final Marker marker : e.getMarkers()) {
+                getLog().error(marker.toString());
+            }
+            throw new MojoFailureException("Invalid API model", e);
+
         } catch (final Exception e) {
+
             throw new MojoFailureException("Failed to read definition", e);
+
         }
 
         // extract info
