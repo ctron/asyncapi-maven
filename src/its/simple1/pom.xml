@@ -41,6 +41,16 @@
             <artifactId>asyncapi</artifactId>
             <version>@asyncapi.version@</version>
         </dependency>
+        <dependency>
+            <groupId>de.dentrassi.asyncapi</groupId>
+            <artifactId>asyncapi-jms-amqp</artifactId>
+            <version>@asyncapi.version@</version>
+        </dependency>
+        <dependency>
+            <groupId>de.dentrassi.asyncapi</groupId>
+            <artifactId>asyncapi-gson</artifactId>
+            <version>@asyncapi.version@</version>
+        </dependency>
     </dependencies>
 
     <build>

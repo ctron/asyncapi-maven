@@ -20,6 +20,30 @@ The following POM files generates the AsyncAPI definition in the file `src/main/
             <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         </properties>
     
+        <dependencies>
+            <dependency>
+                <groupId>de.dentrassi.asyncapi</groupId>
+                <artifactId>asyncapi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            <!-- using the jms-client generator extension -->
+            
+            <dependency>
+                <groupId>de.dentrassi.asyncapi</groupId>
+                <artifactId>asyncapi-jms-amqp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
+            <!-- using the gson generator extension
+            
+            <dependency>
+                <groupId>de.dentrassi.asyncapi</groupId>
+                <artifactId>asyncapi-gson</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    
         <build>
     
             <plugins>
