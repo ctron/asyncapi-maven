@@ -35,7 +35,7 @@ The following POM files generates the AsyncAPI definition in the file `src/main/
                 <version>${project.version}</version>
             </dependency>
             
-            <!-- using the gson generator extension
+            <!-- using the gson generator extension -->
             
             <dependency>
                 <groupId>de.dentrassi.asyncapi</groupId>
