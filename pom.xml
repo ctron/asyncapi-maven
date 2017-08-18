@@ -6,7 +6,7 @@
 
     <groupId>de.dentrassi.maven</groupId>
     <artifactId>asyncapi</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>AsyncAPI Maven plugin</name>
@@ -43,7 +43,7 @@
         <connection>scm:git:git://github.com/ctron/asyncapi-maven.git</connection>
         <url>https://github.com/ctron/asyncapi-maven</url>
         <developerConnection>scm:git:git@github.com:ctron/asyncapi-maven.git</developerConnection>
-      <tag>asyncapi-0.0.3</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
