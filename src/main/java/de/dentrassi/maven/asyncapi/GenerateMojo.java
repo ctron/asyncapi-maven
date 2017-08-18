@@ -52,7 +52,7 @@ public class GenerateMojo extends AbstractMojo {
     private File definitionFile;
 
     @Parameter(property = "asyncapi.ignoreMissingDefinition", required = false, defaultValue = "true")
-    private boolean ignoreMissingDefinition;
+    private boolean ignoreMissingDefinition = true;
 
     /**
      * Allows to skip the whole generation step
@@ -129,7 +129,7 @@ public class GenerateMojo extends AbstractMojo {
         }
 
         if (!this.definitionFile.exists() && this.ignoreMissingDefinition) {
-            getLog().debug(String.format("Skipping. Definition file '%s' is missing but we ignore this", this.definitionFile));
+            getLog().debug(String.format("Skipping generation. Definition file '%s' is missing and we ignore this", this.definitionFile));
             return;
         }
 
