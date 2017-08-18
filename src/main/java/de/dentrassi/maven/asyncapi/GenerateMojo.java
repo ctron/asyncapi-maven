@@ -51,18 +51,33 @@ public class GenerateMojo extends AbstractMojo {
     @Parameter(property = "asyncapi.definition", required = true, defaultValue = "${project.basedir}/src/main/asyncapi.yaml")
     private File definitionFile;
 
-    @Parameter(property = "asyncapi.ignoreMissingDefinition", required = false, defaultValue = "false")
+    @Parameter(property = "asyncapi.ignoreMissingDefinition", required = false, defaultValue = "true")
     private boolean ignoreMissingDefinition;
 
+    /**
+     * Allows to skip the whole generation step
+     */
     @Parameter(property = "asyncapi.skip", required = false, defaultValue = "false")
     private boolean skip;
 
+    /**
+     * The character set to use for generated resources
+     */
     @Parameter(property = "asyncapi.generator.charset", required = true, defaultValue = "${project.build.sourceEncoding}")
     private String characterSet;
 
+    /**
+     * The Java base package for generated
+     * <p>
+     * Will use the {@code baseTopic} prefix from the API model is unspecified
+     * </p>
+     */
     @Parameter(property = "asyncapi.generator.packageBase", required = false)
     private String packageBase;
 
+    /**
+     * The path to generate the sources to
+     */
     @Parameter(required = true, defaultValue = "${project.build.directory}/generated-sources/asyncapi")
     private File targetPath;
 
