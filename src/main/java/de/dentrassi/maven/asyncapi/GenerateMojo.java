@@ -39,7 +39,7 @@ import de.dentrassi.asyncapi.ValidationException;
 import de.dentrassi.asyncapi.Validator.Marker;
 import de.dentrassi.asyncapi.generator.java.Generator;
 import de.dentrassi.asyncapi.generator.java.gson.GsonGeneratorExtension;
-import de.dentrassi.asyncapi.generator.java.jms.JmsClientGeneratorExtension;
+import de.dentrassi.asyncapi.generator.java.jms.JmsGeneratorExtension;
 import de.dentrassi.asyncapi.internal.parser.YamlParser;
 
 /**
@@ -195,14 +195,14 @@ public class GenerateMojo extends AbstractMojo {
     private void addNamedExtensions(final Generator.Builder generator) throws MojoExecutionException {
 
         if (this.extensions == null) {
-            this.extensions = new HashSet<>(Arrays.asList("jms-client", "gson"));
+            this.extensions = new HashSet<>(Arrays.asList("jms", "gson"));
             getLog().info("Using default extensions: " + this.extensions);
         }
 
         for (final String extension : this.extensions) {
             switch (extension.toLowerCase()) {
-            case "jms-client":
-                generator.addExtension(new JmsClientGeneratorExtension());
+            case "jms":
+                generator.addExtension(new JmsGeneratorExtension());
                 break;
             case "gson":
                 generator.addExtension(new GsonGeneratorExtension());
