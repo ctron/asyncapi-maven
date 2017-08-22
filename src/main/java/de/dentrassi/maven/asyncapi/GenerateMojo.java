@@ -35,12 +35,12 @@ import org.apache.maven.project.MavenProject;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
 import de.dentrassi.asyncapi.AsyncApi;
-import de.dentrassi.asyncapi.ValidationException;
-import de.dentrassi.asyncapi.Validator.Marker;
 import de.dentrassi.asyncapi.generator.java.Generator;
 import de.dentrassi.asyncapi.generator.java.gson.GsonGeneratorExtension;
 import de.dentrassi.asyncapi.generator.java.jms.JmsGeneratorExtension;
 import de.dentrassi.asyncapi.internal.parser.YamlParser;
+import de.dentrassi.asyncapi.validate.ValidationException;
+import de.dentrassi.asyncapi.validate.Validator.Marker;
 
 /**
  * Generate sources from AsyncAPI definition
